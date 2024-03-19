@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import path from "path";
-import { writeFile } from "fs/promises";
+import fs from "fs/promises";
 
 function UploadFile() {
 
@@ -10,8 +10,11 @@ function UploadFile() {
         const video = formData.get("video")! as File;
         const videoArrayBuffer = await video.arrayBuffer();
         const videoBuffer = Buffer.from(videoArrayBuffer);
-        const loc = path.join('public', `video-${Date.now()}.mp4`)
-        await writeFile(loc, videoBuffer)
+        const dateId = Date.now();
+        fs.mkdir(`public/${dateId}/`)
+        const videoPath = path.join(`public/${dateId}/`, `video.mp4`)
+        const imagePath = path.join(`public/${dateId}/`, `image.png`)
+        await fs.writeFile(videoPath, videoBuffer)
     }
 
     return <div className="">
@@ -21,7 +24,7 @@ function UploadFile() {
         >
             <label htmlFor="uploadVideo">
                 <Image
-                    src={"/assets/images/upload_icon.jpg"}
+                    src={"/images/upload_icon.jpg"}
                     alt="Upload file image"
                     width={40}
                     height={40}
