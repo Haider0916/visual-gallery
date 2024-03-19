@@ -15,6 +15,7 @@ function UploadFile() {
         const videoPath = path.join(`public/${dateId}/`, `video.mp4`)
         const imagePath = path.join(`public/${dateId}/`, `image.png`)
         await fs.writeFile(videoPath, videoBuffer)
+        console.log({ video })
     }
 
     return <div className="">
